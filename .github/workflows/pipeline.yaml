@@ -31,3 +31,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "polar-headland-92577"
           heroku_email: "mggurpude@mitaoe.ac.in"
+          healthcheck: "https://polar-headland-92577.herokuapp.com/health"
+          checkstring: "ok"
