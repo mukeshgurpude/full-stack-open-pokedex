@@ -31,7 +31,8 @@ jobs:
           start: npm run start-prod
           wait-on: http://localhost:5000
       - name: Deploy to heroku
-        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        uses: akhileshns/heroku-deploy@v3.12.12
+        if: ${{ github.base_ref	== 'refs/heads/master' }}
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "polar-headland-92577"
@@ -39,3 +40,12 @@ jobs:
           healthcheck: "https://polar-headland-92577.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
+  tag_release:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Bump version and push tag
+        if: ${{ github.base_ref == 'refs/heads/master' }}
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
