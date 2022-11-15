@@ -33,3 +33,4 @@ jobs:
           heroku_email: "mggurpude@mitaoe.ac.in"
           healthcheck: "https://polar-headland-92577.herokuapp.com/health"
           checkstring: "ok"
+          rollbackonhealthcheckfailed: true
