@@ -40,6 +40,16 @@ jobs:
           healthcheck: "https://polar-headland-92577.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
+      - name: Send success to discord
+        if: ${{ success() }}
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
+      - name: Send error to discord
+        if: ${{ failure() }}
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-20.04
