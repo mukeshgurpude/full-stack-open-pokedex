@@ -45,11 +45,14 @@ jobs:
         uses: rjstone/discord-webhook-notify@v1
         with:
           webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
+          severity: info
+          details: Test succeeded
       - name: Send error to discord
         if: ${{ failure() }}
         uses: rjstone/discord-webhook-notify@v1
         with:
           webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
+          details: Tests failed
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-20.04
